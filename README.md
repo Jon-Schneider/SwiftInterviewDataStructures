@@ -8,6 +8,12 @@ Each data structure implementation is split into several extensions to make it e
 
 If you notice any bugs I would appreciate it if you would open an issue or submit a pull request and I'll get the fix in ASAP.
 
+### Data Structures
+
+This repo contains implementations of these data structures:
+
+* Binary Search Tree
+
 ### Tests
 
 You can open the Package as an xcode project and run the tests by cloning this repo and then running the command `open InterviewDataStructures/Package.swift" from the project root.
