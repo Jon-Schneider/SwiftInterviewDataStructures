@@ -15,32 +15,47 @@ final class BinarySearchTreeTests: XCTestCase {
         //        100
         //       /   \
         //     90    200
-        //           /   \
-        //        110    220
+        //    /  \   /   \
+        //   50   95 110  220
+        //        /  \   /   \
+        //      105 120 210  230
         let root = BinarySearchTree<Int>.Node(value: 100)
         BinarySearchTree.insert(200, in: root)
         BinarySearchTree.insert(220, in: root)
         BinarySearchTree.insert(90, in: root)
         BinarySearchTree.insert(110, in: root)
+        BinarySearchTree.insert(50, in: root)
+        BinarySearchTree.insert(95, in: root)
+        BinarySearchTree.insert(105, in: root)
+        BinarySearchTree.insert(120, in: root)
+        BinarySearchTree.insert(210, in: root)
+        BinarySearchTree.insert(230, in: root)
 
         var inorderTraversalValues = [Int]()
         BinarySearchTree.traverse(root, .inorder) {
             inorderTraversalValues.append($0)
         }
-        XCTAssertEqual(inorderTraversalValues, [90, 100, 110, 200, 220])
+        XCTAssertEqual(inorderTraversalValues, [50, 90, 95, 100, 105, 110, 120, 200, 210, 220, 230])
 
         var preorderTraversalValues = [Int]()
         BinarySearchTree.traverse(root, .preorder) {
             preorderTraversalValues.append($0)
         }
-        XCTAssertEqual(preorderTraversalValues, [100, 90, 200, 110, 220])
+        XCTAssertEqual(preorderTraversalValues, [100, 90, 50, 95, 200, 110, 105, 120, 220, 210, 230])
 
-        var postOrderTraveralValues = [Int]()
+        var postOrderTraversalValues = [Int]()
         BinarySearchTree.traverse(root, .postorder) {
-            postOrderTraveralValues.append($0)
+            postOrderTraversalValues.append($0)
         }
-        XCTAssertEqual(postOrderTraveralValues, [90, 110, 220, 200, 100])
+        XCTAssertEqual(postOrderTraversalValues, [50, 95, 90, 105, 120, 110, 210, 230, 220, 200, 100])
+
+        var breadthFirstTraversalValues = [Int]()
+        BinarySearchTree.traverse(root, .breadthFirst) {
+            breadthFirstTraversalValues.append($0)
+        }
+        XCTAssertEqual(breadthFirstTraversalValues, [100, 90, 200, 50, 95, 110, 220, 105, 120, 210, 230])
     }
+
 
     func testBinarySearchTreeDeletion() throws {
 

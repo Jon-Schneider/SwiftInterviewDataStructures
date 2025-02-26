@@ -12,6 +12,7 @@ public extension BinarySearchTree {
         case inorder
         case preorder
         case postorder
+        case breadthFirst
     }
 
     static func traverse(_ tree: Node, _ type: TraversalType = .inorder, forEach: (Value) -> Void) {
@@ -22,6 +23,8 @@ public extension BinarySearchTree {
             preorderTraversal(of: tree, forEach: forEach)
         case .postorder:
             postorderTraversal(of: tree, forEach: forEach)
+        case .breadthFirst:
+            breadthFirstTraversal(of: tree, forEach: forEach)
         }
     }
 
@@ -43,5 +46,19 @@ public extension BinarySearchTree {
         tree.left.map({ postorderTraversal(of: $0, forEach: forEach) })
         tree.right.map({ postorderTraversal(of: $0, forEach: forEach) })
         forEach(tree.value)
+    }
+
+    static private func breadthFirstTraversal(of tree: Node, forEach: (Value) -> Void) {
+        // An array is not a good queue asymptotically, but it is acceptable until I write a dedicated queue
+        var queue = [tree]
+
+        while !queue.isEmpty {
+            let node = queue.removeFirst()
+
+            node.left.map({ queue.append($0) })
+            node.right.map({ queue.append($0) })
+
+            forEach(node.value)
+        }
     }
 }
