@@ -13,6 +13,7 @@ If you notice any bugs I would appreciate it if you would open an issue or submi
 This repo contains implementations of these data structures:
 
 * Binary Search Tree
+* Singly-Linked List
 
 ### Tests
 
