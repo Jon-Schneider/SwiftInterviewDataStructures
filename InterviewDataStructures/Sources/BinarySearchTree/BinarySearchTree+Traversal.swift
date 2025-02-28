@@ -15,6 +15,27 @@ public extension BinarySearchTree {
         case breadthFirst
     }
 
+    // MARK: Instance Implementation
+
+    func traverse(_ type: TraversalType = .inorder, forEach: (Value) -> Void) {
+        guard let root else {
+            return
+        }
+
+        switch type {
+        case .inorder:
+            BinarySearchTree.inorderTraversal(of: root, forEach: forEach)
+        case .preorder:
+            BinarySearchTree.preorderTraversal(of: root, forEach: forEach)
+        case .postorder:
+            BinarySearchTree.postorderTraversal(of: root, forEach: forEach)
+        case .breadthFirst:
+            BinarySearchTree.breadthFirstTraversal(of: root, forEach: forEach)
+        }
+    }
+
+    // MARK: Static Implementation
+
     static func traverse(_ tree: Node, _ type: TraversalType = .inorder, forEach: (Value) -> Void) {
         switch type {
         case .inorder:

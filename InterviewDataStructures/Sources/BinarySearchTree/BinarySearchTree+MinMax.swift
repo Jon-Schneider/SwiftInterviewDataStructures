@@ -8,6 +8,27 @@
 import Foundation
 
 extension BinarySearchTree {
+
+    // MARK: Instance Implementation
+
+    var min: Value? {
+        guard let root else {
+            return nil
+        }
+
+        return BinarySearchTree.min(in: root)
+    }
+
+    var max: Value? {
+        guard let root else {
+            return nil
+        }
+
+        return BinarySearchTree.max(in: root)
+    }
+
+    // MARK: Static Implelmentation
+
     static func min(in tree: Node) -> Value {
         guard let leftNode = tree.left else {
             return tree.value

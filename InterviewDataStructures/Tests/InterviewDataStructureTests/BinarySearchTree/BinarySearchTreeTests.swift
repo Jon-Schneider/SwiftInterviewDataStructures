@@ -5,10 +5,13 @@
 //  Created by Jon Schneider on 2/26/25.
 //
 
-import InterviewDataStructures
+@testable import InterviewDataStructures
 import XCTest
 
 final class BinarySearchTreeTests: XCTestCase {
+
+    // MARK: Static Implementation Tests
+
     // We need traversal to test the structure of our BST, so we can't really test them independently - if the test fails we know the issue is with one or the other
     func testBinarySearchTreeStructureAndTraversal() throws {
 
@@ -55,7 +58,6 @@ final class BinarySearchTreeTests: XCTestCase {
         }
         XCTAssertEqual(breadthFirstTraversalValues, [100, 90, 200, 50, 95, 110, 220, 105, 120, 210, 230])
     }
-
 
     func testBinarySearchTreeDeletion() throws {
 
@@ -124,5 +126,131 @@ final class BinarySearchTreeTests: XCTestCase {
         let rootValue = 100
         let root = BinarySearchTree<Int>.Node(value: rootValue)
         XCTAssertNil(BinarySearchTree.delete(rootValue, from: root))
+    }
+
+    // MARK: Instance Implementation Tests
+
+    func testInstanceBinarySearchTreeStructureAndTraversal() throws {
+
+        //        100
+        //       /   \
+        //     90    200
+        //    /  \   /   \
+        //   50   95 110  220
+        //        /  \   /   \
+        //      105 120 210  230
+        let binarySearchTree = BinarySearchTree<Int>(value: 100)
+        binarySearchTree.insert(200)
+        binarySearchTree.insert(220)
+        binarySearchTree.insert(90)
+        binarySearchTree.insert(110)
+        binarySearchTree.insert(50)
+        binarySearchTree.insert(95)
+        binarySearchTree.insert(105)
+        binarySearchTree.insert(120)
+        binarySearchTree.insert(210)
+        binarySearchTree.insert(230)
+
+        var inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(inorderTraversalValues, [50, 90, 95, 100, 105, 110, 120, 200, 210, 220, 230])
+
+        var preorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.preorder) {
+            preorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(preorderTraversalValues, [100, 90, 50, 95, 200, 110, 105, 120, 220, 210, 230])
+
+        var postOrderTraversalValues = [Int]()
+        binarySearchTree.traverse(.postorder) {
+            postOrderTraversalValues.append($0)
+        }
+        XCTAssertEqual(postOrderTraversalValues, [50, 95, 90, 105, 120, 110, 210, 230, 220, 200, 100])
+
+        var breadthFirstTraversalValues = [Int]()
+        binarySearchTree.traverse(.breadthFirst) {
+            breadthFirstTraversalValues.append($0)
+        }
+        XCTAssertEqual(breadthFirstTraversalValues, [100, 90, 200, 50, 95, 110, 220, 105, 120, 210, 230])
+    }
+
+
+    func testInstanceBinarySearchTreeDeletion() throws {
+
+        //        100
+        //       /   \
+        //     90    200
+        //           /   \
+        //        110    220
+        let binarySearchTree = BinarySearchTree<Int>(value: 100)
+        binarySearchTree.insert(200)
+        binarySearchTree.insert(220)
+        binarySearchTree.insert(90)
+        binarySearchTree.insert(110)
+
+        binarySearchTree.delete(220)
+
+        var inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(inorderTraversalValues, [90, 100, 110, 200])
+
+        binarySearchTree.delete(100)
+        inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(inorderTraversalValues, [90, 110, 200])
+
+        binarySearchTree.delete(90)
+        inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(inorderTraversalValues, [110, 200])
+    }
+
+    func testInstanceBinarySearchTreeDuplicatesAreNotInserted() throws {
+        //        100
+        //       /   \
+        //     90    200
+        //           /   \
+        //        110    220
+        let binarySearchTree = BinarySearchTree<Int>(value: 100)
+        binarySearchTree.insert(200)
+        binarySearchTree.insert(220)
+        binarySearchTree.insert(90)
+        binarySearchTree.insert(110)
+
+        // Try reinserting every node, none should be duplicated in the tree
+        binarySearchTree.insert(100)
+        binarySearchTree.insert(200)
+        binarySearchTree.insert(220)
+        binarySearchTree.insert(90)
+        binarySearchTree.insert(110)
+
+        var inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertEqual(inorderTraversalValues, [90, 100, 110, 200, 220])
+    }
+
+    func testInstanceBinarySearchTreeSingleNodeDeletion() {
+        // Deleting the only value in a tree should result in a nil root node
+        let rootValue = 100
+        let binarySearchTree = BinarySearchTree<Int>(value: rootValue)
+        binarySearchTree.delete(rootValue)
+
+        XCTAssertNil(binarySearchTree.root)
+
+        var inorderTraversalValues = [Int]()
+        binarySearchTree.traverse(.inorder) {
+            inorderTraversalValues.append($0)
+        }
+        XCTAssertTrue(inorderTraversalValues.isEmpty)
     }
 }

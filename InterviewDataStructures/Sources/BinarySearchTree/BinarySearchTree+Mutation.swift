@@ -8,6 +8,27 @@
 import Foundation
 
 public extension BinarySearchTree {
+
+    // MARK: Instance Implementation
+
+    func insert(_ value: Value) {
+        guard let root else {
+            return
+        }
+
+        BinarySearchTree.insert(value, in: root)
+    }
+
+    func delete(_ value: Value) {
+        guard let root else {
+            return
+        }
+
+        self.root = BinarySearchTree.delete(value, from: root)
+    }
+
+    // MARK: Static implementation
+
     static func insert(_ value: Value, in tree: Node) {
         // Don't insert duplicates
         // This guard isn't necessary but I added the base case to make this explicit

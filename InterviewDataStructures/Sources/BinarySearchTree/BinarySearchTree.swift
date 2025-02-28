@@ -8,7 +8,7 @@
 import Foundation 
 
 // Enum namespacing with generic definition for enclosed Value
-public enum BinarySearchTree<Value: Comparable> {
+public class BinarySearchTree<Value: Comparable> {
     // I would prefer to define Nodes as structs and use inout functions to mutate the structure of the tree so the tree can be a value type but value types cannot recursively use themselves
     // There are workarounds, but making Node a class is cleaner
     public class Node {
@@ -21,6 +21,15 @@ public enum BinarySearchTree<Value: Comparable> {
             self.value = value
             self.left = left
             self.right = right
+        }
+    }
+
+    // Internal root node for class instances
+    var root: Node?
+
+    public init(value: Value? = nil) {
+        if let value {
+            root = .init(value: value)
         }
     }
 }
