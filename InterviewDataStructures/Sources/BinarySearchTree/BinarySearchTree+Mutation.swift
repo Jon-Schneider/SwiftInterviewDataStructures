@@ -35,7 +35,7 @@ public extension BinarySearchTree {
     ///   - value: The value to delete from teh tree
     ///   - tree: Root node of the tree to delete the value from
     /// - Returns: The new root node of the tree passed to 'tree'
-    static func delete(_ value: Value, from tree: Node) -> Node? {
+    @discardableResult static func delete(_ value: Value, from tree: Node) -> Node? {
         // If the root of the tree contains the value then replace it with the appropriate node in its subtree
         if tree.value == value {
 
